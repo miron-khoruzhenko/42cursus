@@ -75,7 +75,7 @@ char	*ft_read_and_save(int fd, char *save)
 	if (!buff)
 		return (NULL);
 	read_bytes = 1;
-	while (!ft_strchr(save, '\n') && read_bytes != 0)
+	while (!ft_findchr(save, '\n') && read_bytes != 0)
 	{
 		read_bytes = read(fd, buff, BUFFER_SIZE);
 		if (read_bytes == -1)
@@ -97,6 +97,7 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
+
 	save = ft_read_and_save(fd, save);
 	if (!save)
 		return (NULL);
