@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkhoruzh <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/28 06:41:35 by mkhoruzh          #+#    #+#             */
-/*   Updated: 2022/08/28 06:41:36 by mkhoruzh         ###   ########.fr       */
+/*   Created: 2022/08/28 06:41:49 by mkhoruzh          #+#    #+#             */
+/*   Updated: 2022/08/28 06:41:50 by mkhoruzh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_get_line(char *save)
 {
@@ -93,14 +93,14 @@ char	*ft_read_and_save(int fd, char *save)
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*save;
+	static char	*save[1024];
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 1024)
 		return (0);
-	save = ft_read_and_save(fd, save);
-	if (!save)
+	save[fd] = ft_read_and_save(fd, save[fd]);
+	if (!save[fd])
 		return (NULL);
-	line = ft_get_line(save);
-	save = ft_save(save);
+	line = ft_get_line(save[fd]);
+	save[fd] = ft_save(save[fd]);
 	return (line);
 }
