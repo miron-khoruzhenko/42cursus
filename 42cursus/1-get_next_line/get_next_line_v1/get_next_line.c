@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
 char	*ft_get_line(char *save)
 {
@@ -74,6 +75,7 @@ char	*ft_read_and_save(int fd, char *save)
 	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buff)
 		return (NULL);
+		printf("%s", 'not error')
 	read_bytes = 1;
 	while (!ft_findchr(save, '\n') && read_bytes != 0)
 	{
@@ -98,10 +100,24 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
 
+	printf("%s", save);
 	save = ft_read_and_save(fd, save);
 	if (!save)
 		return (NULL);
 	line = ft_get_line(save);
 	save = ft_save(save);
 	return (line);
+}
+
+#include <fcntl.h>
+int main()
+{
+	int x = open("test.txt", O_CREAT | O_RDWR);
+	char *buffer;
+
+	printf("%d", x);
+	buffer = get_next_line(x);
+	printf("%s", buffer);
+
+	return 0;
 }
